@@ -6,7 +6,7 @@
 # See LICENSE file for full copyright and licensing details.
 {
    "name": "ARTG - Customer Portalsss",
-   "version": "18.0.0.3.3",
+   "version": "18.0.0.3.5",
    "summary": "Customer Portal",
    "description": "Customer Portal",
    "author": "A.R. Thomson Group Inc",
