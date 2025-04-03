@@ -5,3 +5,6 @@ on:
 jobs:
   push:
     uses: ./.github/workflows/pre-commit-workflow-template.yml
+  odoo-integration:
+    needs: [push]
+    uses: ./.github/workflows/odoo-integration-workflow.yml

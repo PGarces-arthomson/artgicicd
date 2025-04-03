@@ -1,8 +1,5 @@
-on:
-  workflow_run:
-    workflows: [pre-commit]
-    types: [completed]
-
+name: pre-commit template
+on: workflow_call
 jobs:
   on-success:
     runs-on: ubuntu-latest
