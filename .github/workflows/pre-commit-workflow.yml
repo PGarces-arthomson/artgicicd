@@ -15,6 +15,7 @@ jobs:
     uses: ./.github/workflows/pre-commit-workflow-template.yml
 
   test-job:
+    runs-on: ubuntu-latest
     steps:
       - name: Extract branch name
         shell: bash
