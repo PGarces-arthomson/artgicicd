@@ -4,5 +4,4 @@ on:
     branches: [ '*' ]
 jobs:
   push:
-    if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pre-commit-workflow-template.yml
