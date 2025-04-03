@@ -1,7 +1,9 @@
 name: pre-commit
 on:
+  #noone should be pushing directly to main
   push:
-    branches: [ '*' ]
+    branches-ignore:
+      - 'main'
   pull_request:
     branches: [ 'main' ]
     types: [opened, reopened]
