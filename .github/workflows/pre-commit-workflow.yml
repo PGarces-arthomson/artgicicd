@@ -34,7 +34,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run push actions if PR is open
-        if: steps.check_pr.outputs.has_open_pr == 'true'
+#        if: steps.check_pr.outputs.has_open_pr == 'true'
         run: pre-commit run --all-files
 
 #
