@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hide_doc_timesheet_customer_portal" name="ARTG Customer Portal - Hide Timesheet" customize_show="True"  inherit_id="hr_timesheet.portal_my_home_timesheet" priority="99">
+        <xpath expr="//t[contains(text(), 'Timesheets')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>

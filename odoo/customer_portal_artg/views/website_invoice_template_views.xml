@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- oca-hooks:disable=xml-xpath-translatable-item-->
+
+<odoo>
+    <template id="portal_my_invoices_artg" name="ARTG Customer Portal - Invoice Portal List" inherit_id="account.portal_my_invoices">
+<!--        <xpath expr="//th[contains(text(), 'Invoice #')]" position="after">-->
+<!--            <th>-->
+<!--                Customer PO-->
+<!--            </th>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-esc='invoice.name']/../.." position="after">
+            <td>
+                <span t-field="invoice.ref"/>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="invoice_portal_list_content_artg" name="ARTG Customer Portal - Invoice Portal List" inherit_id="account_payment.portal_my_invoices_payment">
+        <xpath expr="//span[contains(text(), 'Pay Now')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+
+    <template id="invoice_portal_form_content_artg" name="ARTG Customer Portal - Invoice Portal List" inherit_id="account_payment.portal_invoice_page_inherit_payment">
+        <xpath expr="//a//i[@class='fa fa-fw fa-arrow-circle-right']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+    <template id="portal_invoice_page_artg" name="ARTG Customer Portal - Invoice Portal Template" inherit_id="account.portal_invoice_page">
+        <xpath expr="//t[contains(text(), 'Salesperson')]" position="after">
+            <t t-if="invoice.move_type == 'out_invoice'">
+                CSR
+            </t>
+        </xpath>
+
+        <xpath expr="//t[contains(text(), 'Salesperson')]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//img[@t-att-src='image_data_uri(invoice.invoice_user_id.avatar_1024)']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='invoice.invoice_user_id']/../.." position="after">
+            <div class="row flex-nowrap">
+                <div class="col pl-10" style="min-width: 150px;" t-if="invoice.invoice_user_id">
+                    <span t-field="invoice.invoice_user_id" t-options='{"widget": "contact", "fields": ["name", "phone", "email"], "no_marker": True}'/>
+                    <t  t-if="invoice.invoice_user_id.email">
+                        <a t-att-href="'mailto:%s?subject=Inquiry for Invoice: %s' % (invoice.invoice_user_id.email, invoice.display_name)" class="small">
+                            <i class="fa fa-envelope-o"></i> Email me
+                        </a>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//li[@t-if='invoice.invoice_user_id']" position="after">
+            <t t-set="manager" t-value="invoice.invoice_user_id.employee_id.parent_id"/>
+            <li t-if="manager" class="list-group-item flex-grow-1">
+                <div class="small mb-1"><strong class="text-muted">Manager</strong></div>
+                <div class="row flex-nowrap">
+                    <div class="col pl-10" style="min-width: 150px">
+                        <span t-field="manager.user_id" t-options='{"widget": "contact", "fields": ["name", "phone", "email"], "no_marker": True}'/>
+                        <t  t-if="manager.user_id.email">
+                        <a t-att-href="'mailto:%s?subject=Inquiry for Invoice: %s' % (manager.user_id.email, invoice.display_name)" class="small">
+                            <i class="fa fa-envelope-o"></i> Email me
+                        </a>
+                    </t>
+                    </div>
+                </div>
+            </li>
+        </xpath>
+
+        <xpath expr="//span[@t-field='invoice.invoice_user_id']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>

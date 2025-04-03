@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hide_doc_signature_customer_portal" name="ARTG Customer Portal - Hide Signature" customize_show="True" inherit_id="sign.portal_my_home_sign" priority="99">
+        <xpath expr="//t[contains(text(), 'Signatures')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="hide_doc_project_customer_portal" name="ARTG Customer Portal - Hide Project" customize_show="True" inherit_id="project.portal_my_home" priority="99">
+<!-- oca-hooks:disable=xml-xpath-translatable-item-->
+        <xpath expr="//t[contains(text(), 'Projects')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <!-- oca-hooks:disable=xml-xpath-translatable-item-->
+        <xpath expr="//t[contains(text(), 'Tasks')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>

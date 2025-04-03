@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_layout_artg" name="ARTG Customer Portal - Portal Layout" inherit_id="portal.portal_layout">
+        <xpath expr="//a[@href='/my/account']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>

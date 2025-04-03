@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- oca-hooks:disable=xml-xpath-translatable-item-->
+<odoo>
+    <template id="header_hide_cart_customer_portal" inherit_id="website_sale.header_cart_link" name="ARTG Customer Portal - Header Hide Cart" priority="99">
+        <xpath expr="//t[@t-set='show_cart']" position="after">
+            <t t-set="show_cart" t-value="false" />
+        </xpath>
+    </template>
+
+    <template id="hide_doc_quotation_customer_portal" name="ARTG Customer Portal - Hide Quotation" customize_show="True" inherit_id="sale.portal_my_home_sale" priority="99">
+        <xpath expr="//t[contains(text(), 'Quotations')]/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+
+    <template id="portal_my_orders_customer_portal" name="ARTG Sales Customer Portal" inherit_id="sale.portal_my_orders">
+        <xpath expr="//th//span[contains(text(), 'Sales Order #')]/.." position="after">
+            <th>
+                <span class="text-right">Customer PO</span>
+            </th>
+            <th>
+                <span class="text-right">CSR</span>
+            </th>
+        </xpath>
+        <xpath expr="//t[@t-esc='order.name']" position="after">
+            <td><t t-esc="order.client_order_ref"/></td>
+            <td><t t-esc="order.user_id"  t-options='{"widget": "contact", "fields": ["name"], "no_marker": True}'/></td>
+        </xpath>
+    </template>
+
+    <template id="sale_order_portal_content_artg" name="ARTG - Sales Order Portal Content" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//span[@t-field='sale_order.date_order']/.." position="after">
+            <div class="mb-3 col-6">
+                <strong>Customer PO:</strong>
+                <span t-field="sale_order.client_order_ref"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//span[@t-field='sale_order.validity_date']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//th[contains(text(), 'Quantity')]" position="after">
+            <th class="text-left">Estimated Ship Date</th>
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.product_uom_qty']/.." position="after">
+            <td class="text-left">
+                <span t-esc="line.get_latest_delivery_date()"/>
+            </td>
+        </xpath>
+
+        <xpath expr="//a[@t-att-href='report_url']" position="attributes">
+            <attribute name="target">_blank</attribute>
+        </xpath>
+    </template>
+
+    <template id="sale_stock_portal_content_artg" name="ARTG - Remove Cancel stock" inherit_id="sale_stock.sale_order_portal_content_inherit_sale_stock">
+        <xpath expr="//t[@t-set='delivery_orders']" position="after">
+            <t t-set="delivery_orders" t-value="sale_order._get_deliveries()"/>
+        </xpath>
+
+        <xpath expr="//a[@t-att-href='delivery_report_url']" position="attributes">
+            <attribute name="target">_blank</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='i.date_done']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='i.date_done']/.." position="after">
+            <div class="small d-lg-inline-block ml-3">Estimated Ship Date:
+                <span class="text-muted" t-field="i.date_done" t-options="{'date_only': True}"/>
+                <span t-if="i.state in ['draft', 'waiting', 'confirmed', 'assigned']" class="text-muted" t-esc="i.get_shifted_date()"/>
+            </div>
+        </xpath>
+
+    </template>
+
+    <template id="sale_order_portal_template_artg" name="Orders Shipping Followup" inherit_id="sale.sale_order_portal_template">
+        <xpath expr="//img[@t-att-src='image_data_uri(sale_order.user_id.avatar_1024)']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='sale_order.user_id']/../.." position="after">
+            <div class="row flex-nowrap">
+                <div class="col pl-10" style="min-width: 150px;" t-if="sale_order.user_id">
+                    <span t-field="sale_order.user_id" t-options='{"widget": "contact", "fields": ["name", "phone", "email"], "no_marker": True}'/>
+                    <t  t-if="sale_order.user_id.email">
+                        <a t-att-href="'mailto:%s?subject=Inquiry for Sale Order: %s' % (sale_order.user_id.email, sale_order.display_name)" class="small">
+                            <i class="fa fa-envelope-o"></i> Email me
+                        </a>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//span[@t-field='sale_order.user_id']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//strong[contains(text(), 'Salesperson')]" position="after">
+            <div class="small mb-1"><strong class="text-muted">CSR</strong></div>
+        </xpath>
+
+        <xpath expr="//strong[contains(text(), 'Salesperson')]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//li[@t-if='sale_order.user_id']" position="after">
+            <t t-set="manager" t-value="sale_order.user_id.employee_id.parent_id"/>
+            <li t-if="manager" class="list-group-item flex-grow-1">
+                <div class="small mb-1"><strong class="text-muted">Manager</strong></div>
+                <div class="row flex-nowrap">
+                    <div class="col pl-10" style="min-width: 150px">
+                        <span t-field="manager.user_id" t-options='{"widget": "contact", "fields": ["name", "phone", "email"], "no_marker": True}'/>
+                        <t  t-if="manager.user_id.email">
+                        <a t-att-href="'mailto:%s?subject=Inquiry for Sale Order: %s' % (manager.user_id.email, sale_order.display_name)" class="small">
+                            <i class="fa fa-envelope-o"></i> Email me
+                        </a>
+                    </t>
+                    </div>
+                </div>
+            </li>
+        </xpath>
+    </template>
+
+</odoo>

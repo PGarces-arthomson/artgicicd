@@ -1,0 +1,84 @@
+default_language_version:
+  python: python3
+  node: "16.17.0"
+repos:
+-   repo: https://github.com/OCA/odoo-pre-commit-hooks
+    rev: v0.1.1
+    hooks:
+    -   id: oca-checks-odoo-module
+        args: ["--fix"]
+    -   id: oca-checks-po
+        name: Checks for .po[t] files
+        description: Multiple checks for PO files
+        language: python
+        types_or: [ "text" ]
+        files: \.(po|pot)$
+        require_serial: false
+        args: ["--fix"]
+
+-   repo: local
+    hooks:
+    -   id: check-manifest-version
+        name: Check Manifest Version
+        entry: python artg_precommit/check_manifest_version.py
+        language: python
+        files: __manifest__.py$
+    -   id: format-manifest
+        name: Apply ARTGI Branding and manifest formating
+        entry: python artg_precommit/format_manifest.py
+        language: python
+        files: __manifest__.py$
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-case-conflict
+        name: Check files conflict case-insensitive FS like MacOS HFS+ or Windows FAT.
+    -   id: check-ast
+        exclude: __manifest__.py$
+        name: Simply check whether files parse as valid python
+    -   id: check-docstring-first
+        name: Checks for a common error of placing code before the docstring.
+    -   id: check-json
+    -   id: debug-statements
+    -   id: requirements-txt-fixer
+    -   id: check-symlinks
+        name: Checks for symlinks which do not point to anything.
+    -   id: check-xml
+    -   id: end-of-file-fixer
+        files: ^(?!__manifest__\.py$).*\.py$
+        exclude: __manifest__.py$
+    -   id: trailing-whitespace
+        name: Check for trailing whitespaces
+        files: \.py$
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.1.0
+    hooks:
+    -   id: pyupgrade
+        exclude: __manifest__.py$
+        args: ["--keep-percent-format"]
+-   repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+    -   id: black
+        exclude: __manifest__.py$
+-   repo: https://github.com/PyCQA/flake8.git
+    rev: 7.1.2
+    hooks:
+    -   id: flake8
+        args: ["--config=flake8/setup.cfg"]
+-   repo: local
+    hooks:
+    -   id: pylint
+        name: Pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: ["--rcfile=pylint/pylintrc","-rn", "-sn"]
+-   repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort except __init__.py
+        args:
+          - --settings=.
+        exclude: /__init__\.py$
