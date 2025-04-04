@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: odoo/odoo
-          ref: 18.0
+          ref: '18.0'
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-18
           path: odoo-18
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: odoo/enterprise
-          ref: 18.0
+          ref: '18.0'
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
