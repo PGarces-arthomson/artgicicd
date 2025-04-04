@@ -8,6 +8,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: artg-module
+          ref: ${{ github.ref_name }}
       - name: Checkout Odoo 18
         uses: actions/checkout@v4
         with:
@@ -22,5 +23,6 @@ jobs:
           repository: odoo/enterprise
           ref: '18.0'
           fetch-depth: 0
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
