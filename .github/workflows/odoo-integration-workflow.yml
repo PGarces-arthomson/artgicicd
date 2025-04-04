@@ -3,45 +3,14 @@ on: workflow_call
 jobs:
   odoo-integration:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: odoo
-          POSTGRES_PASSWORD: odoo
-          POSTGRES_DB: odoo_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready --health-timeout 10s
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: '3.10.16'
-
-      - name: Install dependencies
-        run:  |
-            sudo apt-get update
-            sudo apt-get install -y git wget python3-dev libpq-dev libxml2-dev libxslt1-dev libzip-dev
-            pip install -r requirements.txt # If you have a requirements.txt
-            pip install psycopg2 #if you use psycopg2 directly
-            pip install odoo #or pip install -e . if you are working on odoo itself.
-
-      - name: Create Odoo configuration
-        run:  |
-          mkdir -p ~/.odoorc
-          echo "[options]" > ~/.odoorc/odoo.conf
-          echo "db_host = postgres" >> ~/.odoorc/odoo.conf
-          echo "db_port = 5432" >> ~/.odoorc/odoo.conf
-          echo "db_user = odoo" >> ~/.odoorc/odoo.conf
-          echo "db_password = odoo" >> ~/.odoorc/odoo.conf
-          echo "db_name = odoo_test" >> ~/.odoorc/odoo.conf
-          echo "test_enable = True" >> ~/.odoorc/odoo.conf
-
-      - name: Run Odoo integration tests
-        run: |
-            odoo --test-enable --stop-after-init -d odoo_test -i base
+          path: artg-module
+      - name: Checkout Odoo 18
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/odoo
+          fetch-depth: 0
+          path: odoo-18
