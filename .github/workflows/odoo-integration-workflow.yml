@@ -16,8 +16,6 @@ jobs:
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-18
           path: odoo-18
-          permissions:
-            contents: read
       - name: Checkout Odoo 18 Enterprise
         uses: actions/checkout@v4
         with:
@@ -26,5 +24,3 @@ jobs:
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
-          permissions:
-            contents: read
