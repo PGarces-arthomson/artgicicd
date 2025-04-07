@@ -1,16 +1,31 @@
-on:
-  workflow_run:
-    workflows: [pre-commit]
-    types: [completed]
-
+name: odoo-integration
+on: workflow_call
 jobs:
-  on-success:
+  odoo-integration:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#    permissions:
+#      packages: write # for other steps in this workflow
     steps:
-      - run: echo 'The triggering workflow passed'
-  on-failure:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps:
-      - run: echo 'The triggering workflow failed'
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          path: artg-module
+#          ref: ${{ github.ref_name }}
+#      - name: Checkout Odoo 18
+#        uses: actions/checkout@v4
+#        with:
+#          repository: odoo/odoo
+#          ref: '18.0'
+#          fetch-depth: 0
+#          # /home/runner/work/artgicicd/artgicicd/odoo-18
+#          path: odoo-18
+      - name: Checkout Odoo 18 Enterprise
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/enterprise
+          ref: '18.0'
+          fetch-depth: 0
+#          token: ${{ secrets.ARTGI_CICD_PAT }}
+          token: ${{ steps.access-token.outputs.token }}
+          # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
+          path: odoo-enterprise-18
