@@ -25,5 +25,5 @@ jobs:
         with:
           repository: PGarces-arthomson/enterprise
           ref: '18.0'
-          token: ${{ secrets.ARTGI_FINE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN  }}
           path: odoo-enterprise-18
