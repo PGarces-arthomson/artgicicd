@@ -25,5 +25,5 @@ jobs:
         with:
           repository: PGarces-arthomson/enterprise
           ref: '18.0'
-          token: ${{ secrets.DEPENDEABOT_TOKEN  }}
+          token: ${{ secrets.ARTGI_CICD_PAT  }}
           path: odoo-enterprise-18
