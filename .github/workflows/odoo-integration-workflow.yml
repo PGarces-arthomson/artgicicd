@@ -21,12 +21,16 @@ jobs:
 #          path: odoo-18
       - name: Checkout Odoo 18 Enterprise
         uses: actions/checkout@v4
-        with:
-          repository: odoo/enterprise
-          ref: '18.0'
-          fetch-depth: 0
+        env:
+          TOKEN: ${{ secrets.ARTGI_CICD_PAT }}
+          run: git clone https://oauth2:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/odoo/enterprise.git /artgicicd/odoo-enterprise-18
+#        run: echo
+#        with:
+#          repository: odoo/enterprise
+#          ref: '18.0'
+#          fetch-depth: 0
 #          token: ${{ secrets.ARTGI_CICD_PAT }}
-          token: ${{ steps.access-token.outputs.token }}
+#          token: ${{ steps.access-token.outputs.token }}
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
-          path: odoo-enterprise-18
+#          path: odoo-enterprise-18
 
