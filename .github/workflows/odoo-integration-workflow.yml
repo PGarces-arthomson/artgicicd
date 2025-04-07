@@ -8,7 +8,7 @@ jobs:
       - name: Checkout ARTGI Repository
         uses: actions/checkout@v4
         with:
-          path: artg-module
+          path: artg-modules
           fetch-depth: 2
           ref: ${{ github.ref_name }}
 
@@ -27,7 +27,7 @@ jobs:
           repository: PGarces-arthomson/enterprise
           ref: '18.0'
           # Active Repo PAT
-          token: ${{ secrets.ARTGI_CICD_PAT  }}
+          token: ${{ secrets.ARTGI_CICD_PAT }}
 
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
@@ -39,6 +39,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pwd
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r ./artgicicd/odoo-18/requirements.txt
