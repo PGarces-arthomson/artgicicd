@@ -27,4 +27,4 @@ jobs:
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-18
           path: odoo-enterprise-18
-          token: ${{ secrets.ARTGI_CICD_PAT }}
+#          token: ${{ secrets.ARTGI_CICD_PAT }}
