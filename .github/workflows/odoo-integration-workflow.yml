@@ -23,6 +23,6 @@ jobs:
           repository: odoo/enterprise
           ref: '18.0'
           fetch-depth: 0
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.ARTGI_CICD_PAT }}
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
