@@ -27,7 +27,7 @@ jobs:
         run: git clone --depth=1 https://oauth2:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/odoo/enterprise.git -b ${{BRANCH}} odoo-enterprise-18
 
       - name: Show list directory
-        run: echo -l
+        run: -l
 #        with:
 #          repository: odoo/enterprise
 #          ref: '18.0'
