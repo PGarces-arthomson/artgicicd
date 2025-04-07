@@ -27,3 +27,8 @@ jobs:
           ref: '18.0'
           token: ${{ secrets.ARTGI_CICD_PAT  }}
           path: odoo-enterprise-18
+
+      - name: Show list directory
+        run: |
+          pwd
+          ls -al
