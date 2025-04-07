@@ -3,6 +3,8 @@ on: workflow_call
 jobs:
   odoo-integration:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write # for other steps in this workflow
     steps:
 #      - name: Checkout
 #        uses: actions/checkout@v4
