@@ -39,7 +39,7 @@ jobs:
           repository: PGarces-arthomson/enterprise
           ref: '18.0'
           # Active Repo PAT
-          token: ${{ secrets.ARTGI_CICD_PAT  }}
+          token: ${{ secrets.ARTGI_CICD_PAT }}
 
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
