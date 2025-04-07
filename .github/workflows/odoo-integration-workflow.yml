@@ -21,11 +21,10 @@ jobs:
 #          path: odoo-18
       - name: Checkout Odoo 18 Enterprise
         uses: actions/checkout@v4
-        token: ${{ secrets.ARTGI_FINE_TOKEN }}
         with:
           repository: PGarces-arthomson/enterprise
           ref: '18.0'
           fetch-depth: 0
           # /home/runner/work/artgicicd/artgicicd/odoo-18
           path: odoo-enterprise-18
-
+          token: ${{ secrets.ARTGI_FINE_TOKEN }}

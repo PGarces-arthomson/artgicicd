@@ -12,6 +12,20 @@ jobs:
   pull-request:
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pre-commit-workflow-template.yml
+#  odoo-integration:
+#    needs: [push]
+#    uses: ./.github/workflows/odoo-integration-workflow.yml
+
   odoo-integration:
+    runs-on: ubuntu-latest
     needs: [push]
-    uses: ./.github/workflows/odoo-integration-workflow.yml
+    steps:
+      - name: Checkout Odoo 18 Enterprise
+        uses: actions/checkout@v4
+        with:
+          repository: PGarces-arthomson/enterprise
+          ref: '18.0'
+          fetch-depth: 0
+          # /home/runner/work/artgicicd/artgicicd/odoo-18
+          path: odoo-enterprise-18
+          token: ${{ secrets.ARTGI_FINE_TOKEN }}
