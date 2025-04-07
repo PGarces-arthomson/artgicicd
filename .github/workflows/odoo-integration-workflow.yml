@@ -29,3 +29,4 @@ jobs:
           token: ${{ steps.access-token.outputs.token }}
           # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
           path: odoo-enterprise-18
+
