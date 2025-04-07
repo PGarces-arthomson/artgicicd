@@ -1,4 +1,3 @@
-name: pre-commit
 on:
   push:
     branches: [ '*' ]
@@ -13,3 +12,6 @@ jobs:
   pull-request:
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pre-commit-workflow-template.yml
+  odoo-integration:
+    needs: [push]
+    uses: ./.github/workflows/odoo-integration-workflow.yml
