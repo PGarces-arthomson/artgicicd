@@ -4,19 +4,19 @@ jobs:
   odoo-integration:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: artg-module
-          ref: ${{ github.ref_name }}
-      - name: Checkout Odoo 18
-        uses: actions/checkout@v4
-        with:
-          repository: odoo/odoo
-          ref: '18.0'
-          fetch-depth: 0
-          # /home/runner/work/artgicicd/artgicicd/odoo-18
-          path: odoo-18
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          path: artg-module
+#          ref: ${{ github.ref_name }}
+#      - name: Checkout Odoo 18
+#        uses: actions/checkout@v4
+#        with:
+#          repository: odoo/odoo
+#          ref: '18.0'
+#          fetch-depth: 0
+#          # /home/runner/work/artgicicd/artgicicd/odoo-18
+#          path: odoo-18
       - name: Checkout Odoo 18 Enterprise
         uses: actions/checkout@v4
         with:
