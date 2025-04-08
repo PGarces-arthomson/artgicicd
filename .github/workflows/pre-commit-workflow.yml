@@ -71,8 +71,9 @@ jobs:
       - name: Setup Postgres
         run: |
           sudo apt-get install --yes --no-install-recommends postgresql-client
-#          psql -U postgres -h localhost -p 5432 -c "CREATE USER odoo18 WITH CREATEDB SUPERUSER PASSWORD 'odoo18'"
           sudo su - postgres
+#          psql -U postgres -h localhost -p 5432 -c "CREATE USER odoo18 WITH CREATEDB SUPERUSER PASSWORD 'odoo18'"
+
 #          psql
 #          CREATE USER runner WITH CREATEDB SUPERUSER PASSWORD 'runner'
 #
