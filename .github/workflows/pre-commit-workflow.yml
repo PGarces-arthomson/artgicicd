@@ -72,9 +72,9 @@ jobs:
         run: |
           sudo apt-get install -y postgresql
           sudo su - postgres
-          createuser --createdb --username postgres --no-createrole --superuser odoo18 --password odoo18
+          createuser --createdb --username postgres --no-createrole --superuser odoo18
           psql
-          ALTER ROLE odoo18 WITH PASSWORD 'odoo18'
+          ALTER ROLE odoo18 WITH PASSWORD 'odoo18';
           \q
           exit
 
