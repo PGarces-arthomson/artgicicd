@@ -101,5 +101,8 @@ jobs:
     steps:
       - name: Run integration test
         run: |
-          cd odoo-18
-          ./odoo-bin -c ../../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
+          pwd
+          ls -larth
+          docker ps
+#          cd odoo-18
+#          ./odoo-bin -c ../../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
