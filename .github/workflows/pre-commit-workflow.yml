@@ -77,7 +77,7 @@ jobs:
           pwd
           ls
           pip install -r artg-modules/requirements.txt
-          pip install -r artgicicd/odoo-18/requirements.txt
+          pip install -r odoo-18/requirements.txt
           
 #      - name: Install development libraries and dependencies
 #        run: |
