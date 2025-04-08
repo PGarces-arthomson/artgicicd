@@ -13,7 +13,7 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pre-commit-workflow-template.yml
 
-  prepare-postgres:
+  integration-test:
     runs-on: ubuntu-latest
     needs: [push]
     services:
@@ -33,11 +33,11 @@ jobs:
           container_status=$(docker ps --filter name=postgres --format "{{.Names}}")
           echo "PostgreSQL container is running: $container_status"
 
-  prepare-odoo-environment:
-    runs-on: ubuntu-latest
-    needs: [prepare-postgres]
+#  prepare-odoo-environment:
+#    runs-on: ubuntu-latest
+#    needs: [prepare-postgres]
 #    needs: [push]
-    steps:
+#    steps:
 
       - name: Checkout ARTGI Repository
         uses: actions/checkout@v4
@@ -95,14 +95,14 @@ jobs:
           echo "db_password = odoo18" >> odoo.conf
           echo "test_enable = True" >> odoo.conf
 
-  integration-test:
-    runs-on: ubuntu-latest
-    needs: [ prepare-postgres, prepare-odoo-environment ]
-    steps:
+  #integration-test:
+  #  runs-on: ubuntu-latest
+  #  needs: [ prepare-postgres, prepare-odoo-environment ]
+  #  steps:
       - name: Run integration test
         run: |
           pwd
           ls -larth
           docker ps
-#          cd odoo-18
-#          ./odoo-bin -c ../../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
+          cd odoo-18
+          ./odoo-bin -c ../../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
