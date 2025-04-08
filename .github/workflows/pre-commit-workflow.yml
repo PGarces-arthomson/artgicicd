@@ -31,7 +31,7 @@ jobs:
       - name: Get current working directory
         run: |
           WORKING_DIR_PATH=$(pwd)
-          echo "Current working directory: $current_dir"
+          echo "Current working directory: $WORKING_DIR_PATH"
           echo "WORKING_DIR=$current_dir" >> $GITHUB_ENV
 
       - name: Check Postgres status
