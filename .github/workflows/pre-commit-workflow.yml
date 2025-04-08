@@ -52,11 +52,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ../ && pwd
+          cd artg-modules && pwd
           ls
           python -m pip install --upgrade pip
-          pip install -r artgicicd/requirements.txt
-          pip install -r artgicicd/odoo-18/requirements.txt
+          pip install -r requirements.txt
+#          pip install -r artgicicd/odoo-18/requirements.txt
           
       - name: Install development libraries and dependencies
         run: |
