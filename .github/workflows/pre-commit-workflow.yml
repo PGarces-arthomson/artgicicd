@@ -29,7 +29,10 @@ jobs:
           --health-cmd pg_isready --health-timeout 10s
     steps:
       - name: Install dependencies
-        run: psql -U postgres -h postgres -c "CREATE USER odoo18 WITH CREATEDB SUPERUSER PASSWORD 'odoo18'"
+        run: |
+          docker ps
+          psql -U postgres -h postgres -c "CREATE USER odoo18 WITH CREATEDB SUPERUSER PASSWORD 'odoo18'"
+          
 
   prepare-odoo-environment:
     runs-on: ubuntu-latest
