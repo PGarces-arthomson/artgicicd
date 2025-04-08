@@ -74,6 +74,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pwd
+          ls
           pip install -r artg-modules/requirements.txt
           pip install -r artgicicd/odoo-18/requirements.txt
           
