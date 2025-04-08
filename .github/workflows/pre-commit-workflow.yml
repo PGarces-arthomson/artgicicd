@@ -27,6 +27,9 @@ jobs:
           - 5432:5432
         options: >-
           --health-cmd pg_isready --health-timeout 10s
+    steps:
+      - name: Install dependencies
+        run: npm ci
 
   Prepare-odoo-environment:
     runs-on: ubuntu-latest
