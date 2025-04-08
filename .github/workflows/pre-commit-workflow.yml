@@ -71,7 +71,7 @@ jobs:
       - name: Setup Postgres
         run: |
           sudo apt-get install -y postgresql
-          sudo service postgresql status
+          sudo service postgresql start
           sudo su - postgres
           psql
           CREATE USER odoo18 WITH CREATEDB SUPERUSER PASSWORD 'odoo18'
