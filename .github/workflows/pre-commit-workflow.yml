@@ -85,8 +85,7 @@ jobs:
           echo "db_port = 5432" >> ~/odoo.conf
           echo "db_user = odoo18" >> ~/odoo.conf
           echo "db_password = odoo18" >> ~/odoo.conf
-#          echo "db_name = odoo_test" >> ~/odoo.conf
           echo "test_enable = True" >> ~/odoo.conf
-          pwd
+          cd ~ && pwd
           cat odoo.conf
 
