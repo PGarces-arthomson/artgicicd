@@ -13,30 +13,30 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/pre-commit-workflow-template.yml
 
-#  prepare-postgres:
-#    runs-on: ubuntu-latest
-#    needs: [push]
-#    services:
-#      postgres:
-#        image: postgres:14
-#        env:
-#          POSTGRES_USER: odoo18
-#          POSTGRES_PASSWORD: odoo18 # Or your desired password
-#          POSTGRES_DB: odoo_test
-#        ports:
-#          - 5432:5432
-#        options: >-
-#          --health-cmd pg_isready --health-timeout 10s
-#    steps:
-#      - name: Check Postgres status
-#        run: |
-#          container_status=$(docker ps --filter name=postgres --format "{{.Names}}")
-#          echo "PostgreSQL container is running: $container_status"
+  prepare-postgres:
+    runs-on: ubuntu-latest
+    needs: [push]
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: odoo18
+          POSTGRES_PASSWORD: odoo18 # Or your desired password
+          POSTGRES_DB: odoo_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-timeout 10s
+    steps:
+      - name: Check Postgres status
+        run: |
+          container_status=$(docker ps --filter name=postgres --format "{{.Names}}")
+          echo "PostgreSQL container is running: $container_status"
 
   prepare-odoo-environment:
     runs-on: ubuntu-latest
-#    needs: [prepare-postgres]
-    needs: [push]
+    needs: [prepare-postgres]
+#    needs: [push]
     steps:
 
       - name: Checkout ARTGI Repository
@@ -46,25 +46,25 @@ jobs:
           fetch-depth: 2
           ref: ${{ github.ref_name }}
 
-#      - name: Checkout Odoo 18
-#        uses: actions/checkout@v4
-#        with:
-#          repository: odoo/odoo
-#          ref: '18.0'
-#          fetch-depth: 0
-#          # /home/runner/work/artgicicd/artgicicd/odoo-18
-#          path: odoo-18
-#
-#      - name: Checkout Odoo Enterprise 18
-#        uses: actions/checkout@v4
-#        with:
-#          repository: PGarces-arthomson/enterprise
-#          ref: '18.0'
-#          # Active Repo PAT
-#          token: ${{ secrets.ARTGI_CICD_PAT }}
-#
-#          # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
-#          path: odoo-enterprise-18
+      - name: Checkout Odoo 18
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/odoo
+          ref: '18.0'
+          fetch-depth: 0
+          # /home/runner/work/artgicicd/artgicicd/odoo-18
+          path: odoo-18
+
+      - name: Checkout Odoo Enterprise 18
+        uses: actions/checkout@v4
+        with:
+          repository: PGarces-arthomson/enterprise
+          ref: '18.0'
+          # Active Repo PAT
+          token: ${{ secrets.ARTGI_CICD_PAT }}
+
+          # /home/runner/work/artgicicd/artgicicd/odoo-enterprise-18
+          path: odoo-enterprise-18
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -80,20 +80,28 @@ jobs:
         run: |
           sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev libmysqlclient-dev libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev
 
-#      - name: Install Node Js and NPM
-#        run: |
-#          sudo apt-get install -y npm
-#          sudo npm install -g less less-plugin-clean-css
-#          sudo apt-get install -y node-less
-#
-#      - name: Create Odoo configuration
-#        run: |
-#          echo "[options]" > ~/odoo.conf
-#          echo "db_host = postgres" >> ~/odoo.conf
-#          echo "db_port = 5432" >> ~/odoo.conf
-#          echo "db_user = odoo18" >> ~/odoo.conf
-#          echo "db_password = runner" >> ~/odoo.conf
-#          echo "test_enable = True" >> ~/odoo.conf
-#          cd ~ && pwd
-#          cat odoo.conf
+      - name: Install Node Js and NPM
+        run: |
+          sudo apt-get install -y npm
+          sudo npm install -g less less-plugin-clean-css
+          sudo apt-get install -y node-less
 
+      - name: Create Odoo configuration
+        run: |
+          echo "[options]" > odoo.conf
+          echo "db_host = postgres" >> odoo.conf
+          echo "db_port = 5432" >> odoo.conf
+          echo "db_user = odoo18" >> odoo.conf
+          echo "db_password = odoo18" >> odoo.conf
+          echo "test_enable = True" >> odoo.conf
+          cd ~ && pwd
+          cat odoo.conf
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: [ prepare-postgres, prepare-odoo-environment ]
+    steps:
+      - name: Run integration test
+        run: |
+          cd odoo-18
+          ./odoo-bin -c ../../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
