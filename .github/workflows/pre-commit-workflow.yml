@@ -94,8 +94,6 @@ jobs:
           echo "db_user = odoo18" >> odoo.conf
           echo "db_password = odoo18" >> odoo.conf
           echo "test_enable = True" >> odoo.conf
-          cd ~ && pwd
-          cat odoo.conf
 
   integration-test:
     runs-on: ubuntu-latest
