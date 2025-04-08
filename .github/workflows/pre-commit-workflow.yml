@@ -56,3 +56,37 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
           pip install -r ./artgicicd/odoo-18/requirements.txt
+          
+      - name: Install development libraries and dependencies
+        run: |
+          sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev libmysqlclient-dev libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev
+
+      - name: Install Node Js and NPM
+        run: |
+          sudo apt-get install -y npm
+          sudo ln -s /usr/bin/nodejs /usr/bin/node
+          sudo npm install -g less less-plugin-clean-css
+          sudo apt-get install -y node-less
+
+      - name: Setup Postgres
+        run: |
+          sudo apt-get install -y postgresql
+          sudo su - postgres
+          createuser --createdb --username postgres --no-createrole --superuser odoo18 --password odoo18
+          psql
+          ALTER ROLE odoo18 WITH PASSWORD 'odoo18'
+          \q
+          exit
+
+      - name: Create Odoo configuration
+        run: |
+          echo "[options]" > ~/odoo.conf
+          echo "db_host = postgres" >> ~/odoo.conf
+          echo "db_port = 5432" >> ~/odoo.conf
+          echo "db_user = odoo18" >> ~/odoo.conf
+          echo "db_password = odoo18" >> ~/odoo.conf
+#          echo "db_name = odoo_test" >> ~/odoo.conf
+          echo "test_enable = True" >> ~/odoo.conf
+          pwd
+          cat odoo.conf
+
