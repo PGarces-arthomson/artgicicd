@@ -73,10 +73,10 @@ jobs:
           sudo apt-get install -y postgresql postgresql-client
           sudo service postgresql start
           sudo su - postgres
-          psql
-          CREATE USER runner WITH CREATEDB SUPERUSER PASSWORD 'runner'
-          
-          \q
+#          psql
+#          CREATE USER runner WITH CREATEDB SUPERUSER PASSWORD 'runner'
+#
+#          \q
           exit
 
       - name: Create Odoo configuration
