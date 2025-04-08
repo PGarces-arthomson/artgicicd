@@ -28,16 +28,16 @@ jobs:
         options: >-
           --health-cmd pg_isready --health-timeout 10s
     steps:
+      - name: Get current working directory
+        run: |
+          WORKING_DIR_PATH=$(pwd)
+          echo "Current working directory: $current_dir"
+          echo "WORKING_DIR=$current_dir" >> $GITHUB_ENV
+
       - name: Check Postgres status
         run: |
           container_status=$(docker ps --filter name=postgres --format "{{.Names}}")
           echo "PostgreSQL container is running: $container_status"
-
-#  prepare-odoo-environment:
-#    runs-on: ubuntu-latest
-#    needs: [prepare-postgres]
-#    needs: [push]
-#    steps:
 
       - name: Checkout ARTGI Repository
         uses: actions/checkout@v4
@@ -95,11 +95,9 @@ jobs:
           echo "db_password = odoo18" >> odoo.conf
           echo "test_enable = True" >> odoo.conf
 
-  #integration-test:
-  #  runs-on: ubuntu-latest
-  #  needs: [ prepare-postgres, prepare-odoo-environment ]
-  #  steps:
       - name: Run integration test
         run: |
+          
+          TEST_PATH="./path/to/your/module/tests" # Specify the path to your tests
           cd odoo-18
-          ./odoo-bin -c ../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
+          ./odoo-bin -c ../odoo.conf -d odoo_test --addons-path=${WORKING_DIR}/odoo-18/addons,${WORKING_DIR}/odoo-18/odoo/addons,${WORKING_DIR}/odoo-enterprise-18 -i base --test-enable --stop-after-init
