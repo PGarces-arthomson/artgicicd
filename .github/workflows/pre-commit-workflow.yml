@@ -78,7 +78,7 @@ jobs:
 #          CREATE USER runner WITH CREATEDB SUPERUSER PASSWORD 'runner'
 #
 #          \q
-          exit
+#          exit
 
       - name: Create Odoo configuration
         run: |
