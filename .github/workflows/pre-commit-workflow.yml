@@ -94,10 +94,9 @@ jobs:
           echo "db_user = odoo18" >> odoo.conf
           echo "db_password = odoo18" >> odoo.conf
           echo "test_enable = True" >> odoo.conf
+          echo "addons_path = ${WORKING_DIR_PATH}/odoo-18/addons,${WORKING_DIR_PATH}/odoo-18/odoo/addons,${WORKING_DIR_PATH}/odoo-enterprise-18" >> odoo.conf
 
       - name: Run integration test
         run: |
-          
-          TEST_PATH="./path/to/your/module/tests" # Specify the path to your tests
           cd odoo-18
-          ./odoo-bin -c ../odoo.conf -d odoo_test --addons-path=${WORKING_DIR_PATH}/odoo-18/addons,${WORKING_DIR_PATH}/odoo-18/odoo/addons,${WORKING_DIR_PATH}/odoo-enterprise-18 -i base --test-enable --stop-after-init
+          ./odoo-bin -c ../odoo.conf -d odoo_test -i base --test-enable --stop-after-init
