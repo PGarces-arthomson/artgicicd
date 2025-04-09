@@ -89,7 +89,7 @@ jobs:
       - name: Create Odoo configuration
         run: |
           echo "[options]" > odoo.conf
-          echo "db_host = postgres" >> odoo.conf
+          echo "db_host = localhost" >> odoo.conf
           echo "db_port = 5432" >> odoo.conf
           echo "db_user = odoo18" >> odoo.conf
           echo "db_password = odoo18" >> odoo.conf
